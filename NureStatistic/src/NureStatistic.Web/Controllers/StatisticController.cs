@@ -21,5 +21,10 @@ namespace NureStatistic.Web.Controllers
 
             return View(model);
         }
+
+        public ViewResult About()
+        {
+            return View();
+        }
     }
 }
