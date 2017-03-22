@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NureStatistic.BLL.Infrastructure;
+using NureStatistic.Web.AppStart.DI;
 
 namespace NureStatistic.Web
 {
@@ -14,6 +17,7 @@ namespace NureStatistic.Web
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddJsonFile("nureapiurls.json")
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
@@ -22,7 +26,15 @@ namespace NureStatistic.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
+
+            services.Configure<NureApiUrls>(Configuration);
+
+            DependencyResolver.Resolve(services, Configuration);
+
             services.AddMvc();
+
+            services.AddAutoMapper();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -37,7 +49,7 @@ namespace NureStatistic.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Statistic/Error");
             }
 
             app.UseStaticFiles();
@@ -46,7 +58,7 @@ namespace NureStatistic.Web
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Statistic}/{action=Index}/{id?}");
             });
         }
     }
