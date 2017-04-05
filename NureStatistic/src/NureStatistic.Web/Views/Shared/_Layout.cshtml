@@ -17,39 +17,57 @@
     @RenderSection("styles", required: false)
 </head>
 <body>
-    <nav class="white" role="navigation">
+    <nav class="nav-extended white" role="navigation">
         <div class="nav-wrapper container">
-            <a id="logo-container" class="brand-logo" asp-controller="Statistic" asp-action="Index">KNURE</a>
-            <ul class="right hide-on-med-and-down">
-                <li><a asp-controller="Statistic" asp-action="About">About</a></li>
+            <a class="brand-logo" asp-controller="Home" asp-action="Index">KNURE</a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="#">Login</a></li>
             </ul>
-            <ul id="nav-mobile" class="side-nav">
+            <ul class="side-nav" id="mobile-demo">
                 <li><a href="#">Login</a></li>
             </ul>
-            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
         </div>
+        
+        @RenderSection("submenu", required: false)
+
     </nav>
 
     @RenderBody()
     
-    @if (!IsSectionDefined("footer"))
-    {
-        <div class="footer-copyright">
-            <div class="container">
-                Made by <a class="brown-text text-lighten-3" href="#!">Oleksandr Chyzh</a>
+    <footer class="page-footer teal">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">University Bio</h5>
+                    <p class="grey-text text-lighten-4">Kharkiv National University of Radioelectronics (KNURE) is a higher education institution of the highest level of accreditation in Ukraine. It is one of the oldest Universities of Technologies in Ukraine with over 12000 students and 30 scientific centers.</p>
+
+                </div>
+                <div class="col l3 s12">
+                    <h5 class="white-text">Contact Us</h5>
+                    <ul>
+                        <li><span class="white-text">Developer's email: oleksandr.chyzh@nure.ua</span></li>
+                    </ul>
+                </div>
+                <div class="col l3 s12">
+                    <h5 class="white-text">Links</h5>
+                    <ul>
+                        <li><a class="white-text" href="http://nure.ua/">Knure official site</a></li>
+                        <li><a class="white-text" href="http://cist.nure.ua/">Knure timetable</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-    }
-    else
-    {
-        @RenderSection("footer", required: false)
-    }
+        <div class="footer-copyright">
+            <div class="container">
+                Made by <span class="brown-text text-lighten-3">Oleksandr Chyzh</span>
+            </div>
+        </div>
+    </footer>
 
 <environment names="Development">
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="~/js/materialize.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
 </environment>
 <environment names="Staging,Production">
     <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
@@ -57,7 +75,6 @@
             asp-fallback-test="window.jQuery">
     </script>
     <script type="text/javascript" src="~/js/materialize.min.js"></script>
-    <script src="~/js/site.min.js" asp-append-version="true"></script>
 </environment>
 
 @RenderSection("scripts", required: false)

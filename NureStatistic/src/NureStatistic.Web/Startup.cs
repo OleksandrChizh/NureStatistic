@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using NureStatistic.BLL.Infrastructure;
 using NureStatistic.Web.AppStart.DI;
+using NureStatistic.Web.Services;
 
 namespace NureStatistic.Web
 {
@@ -58,7 +58,7 @@ namespace NureStatistic.Web
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Statistic}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

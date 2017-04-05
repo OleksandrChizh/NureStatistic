@@ -1,0 +1,33 @@
+﻿@using NureStatistic.BLL.Dto;
+@model UniversityDto
+
+<div class="container">
+  <ul class="collapsible" data-collapsible="accordion">
+    <li>
+      <div class="collapsible-header" title="@Model.FullName">@Model.ShortName<i class="material-icons">send</i></div>
+      <div class="collapsible-body">
+        <ul class="collapsible" data-collapsible="expandable">
+          @foreach (var building in Model.Buildings)
+          {
+              <li>
+                <div class="collapsible-header" title="@building.FullName">@building.ShortName<i class="material-icons">send</i></div>
+                <div class="collapsible-body">
+                  <ul class="collection">
+                    @foreach (var auditory in building.Auditories)
+                    {
+                      var floor = auditory.Floor == null ? "undefined" : auditory.Floor.ToString();
+                        <li class="collection-item" title="Floor: @floor" data-auditory-id="@auditory.Id">@auditory.ShortName</li>
+                    }
+                  </ul>
+                </div>
+              </li>
+          }
+        </ul>
+      </div>
+  </ul>
+</div>
+<script>
+  $(document).ready(function () {
+    $('.collapsible').collapsible();
+  });
+</script>

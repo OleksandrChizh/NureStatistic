@@ -1,6 +1,26 @@
-﻿nav ul a,
-nav .brand-logo {
-  color: #444;
+﻿.search-block {
+    background-color: #26a69a;
+}
+
+.search-block form .material-icons {
+    color: white !important;
+}
+
+.search-block form {
+    height: 63px;
+}
+
+nav ul a,
+nav .brand-logo,
+nav .nav-content .tab a,
+nav form .material-icons,
+.search-block form #search:focus ~ .material-icons,
+.search-block form #search:focus ~ label .material-icons {
+    color: #444 !important;
+}
+
+nav .nav-content .indicator {
+    background-color: #444 !important;
 }
 
 p {

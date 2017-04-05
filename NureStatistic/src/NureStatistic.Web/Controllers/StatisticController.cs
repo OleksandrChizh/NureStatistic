@@ -1,30 +1,52 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using NureStatistic.BLL.ApiModels;
-using NureStatistic.BLL.Infrastructure;
+
+using NureStatistic.BLL.Interfaces;
 
 namespace NureStatistic.Web.Controllers
 {
     public class StatisticController : Controller
     {
-        private readonly NureApiUrls _urls;
+        private readonly IStatisticService _statisticService;
 
-        public StatisticController(IOptions<NureApiUrls> urls)
+        public StatisticController(IStatisticService statisticService)
         {
-            _urls = urls.Value;
+            _statisticService = statisticService;
         }
 
-        public async Task<ViewResult> Index()
+        [HttpGet]
+        public async Task<JsonResult> GetTeacherStatistic(string teacherId, DateTime from, DateTime to)
         {
-            var model = await RequestSender.Get<StructureApiModel>(_urls.TeachersStructureUrl);
+            SetDefaultInterval(ref from, ref to);
 
-            return View(model);
+            var result = await _statisticService.GetTeacherStatisticAsync(teacherId, from, to);
+
+            return Json(result);
         }
 
-        public ViewResult About()
+        [HttpGet]
+        public async Task<JsonResult> GetGroupStatistic(string groupId, DateTime from, DateTime to)
         {
-            return View();
+            SetDefaultInterval(ref from, ref to);
+
+            var result = await _statisticService.GetGroupStatisticAsync(groupId, from, to);
+
+            return Json(result);
+        }
+
+        private void SetDefaultInterval(ref DateTime from, ref DateTime to)
+        {
+            if (from == default(DateTime) && to == default(DateTime))
+            {
+                from = DateTime.UtcNow;
+                to = from.AddDays(14);
+            }
+            else if (from != default(DateTime) && to == default(DateTime))
+            {
+                to = from.AddDays(14);
+            }
         }
     }
 }

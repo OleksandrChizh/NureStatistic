@@ -1,0 +1,62 @@
+﻿@using NureStatistic.BLL.Dto;
+@model UniversityDto
+
+<div class="container">
+  <div class="row">
+    <div class="col m6">
+      <label for="date-from">From</label>
+      <input id="date-from" type="date" class="datepicker" data-is-date-from="true">
+    </div>
+
+    <div class="col m6">
+      <label for="date-to">To</label>
+      <input id="date-to" type="date" class="datepicker" data-is-date-to="true">
+    </div>
+  </div>
+
+  <ul class="collapsible" data-collapsible="accordion">
+    <li>
+      <div class="collapsible-header" title="@Model.ShortName">@Model.FullName<i class="material-icons">send</i>
+      </div>
+      <div class="collapsible-body">
+        <ul class="collapsible" data-collapsible="expandable">
+          @foreach (var faculty in Model.Faculties)
+          {
+            <li>
+              <div class="collapsible-header" title="@faculty.ShortName">@faculty.FullName<i class="material-icons">send</i>
+              </div>
+              <div class="collapsible-body">
+                <ul class="collapsible" data-collapsible="expandable">
+                  @foreach (var direction in faculty.Directions)
+                  {
+                    <li>
+                      <div class="collapsible-header" title="@direction.ShortName">@direction.FullName<i class="material-icons">send</i>
+                      </div>
+                      <div class="collapsible-body">
+                        @if (direction.Groups != null)
+                        {
+                          <ul class="collection">
+                            @foreach (var group in direction.Groups)
+                            {
+                              <li class="collection-item"><a href="" data-group-id="@group.Id">@group.Name</a></li>
+                            }
+                          </ul>
+                        }
+                      </div>
+                    </li>
+                  }
+                </ul>
+              </div>
+            </li>
+          }
+        </ul>
+      </div>
+    </li>
+  </ul>
+  
+  <div id="daily-occupations-container"></div>
+  <div id="event-type-counts-container"></div>
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="~/js/group.js"></script>
