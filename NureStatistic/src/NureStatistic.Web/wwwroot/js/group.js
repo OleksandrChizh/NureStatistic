@@ -1,4 +1,6 @@
-﻿(function($) {
+﻿(function ($) {
+    var binded;
+
     $(document).ready(function () {
         $(".collapsible").collapsible();
     });
@@ -6,6 +8,10 @@
     $(".datepicker").pickadate({
         selectMonths: true,
         selectYears: 2
+    });
+
+    $(window).resize(function () {
+        binded();
     });
 
     $("[data-group-id]").on("click",
@@ -57,7 +63,7 @@
                         dailyOccupations: dailyOccupations,
                         eventTypeCounts: eventTypeCounts
                     };
-                    var binded = setOnLoadCallbackFunction.bind(context);
+                    binded = setOnLoadCallbackFunction.bind(context);
                     google.charts.setOnLoadCallback(binded);
 
                     function setOnLoadCallbackFunction() {
@@ -77,9 +83,7 @@
         dataTable.addRows(dailyOccupations);
 
         var options = {
-            "title": "Events Count For Period",
-            "width": 1100,
-            "height": 300
+            "title": "Events Count For Period"
         };
 
         var chartContainer = document.getElementById(chartContainerId);
@@ -94,9 +98,7 @@
         dataTable.addRows(eventTypeCounts);
 
         var options = {
-            "title": "Events Types Counts",
-            "width": 500,
-            "height": 500
+            "title": "Events Types Counts"
         };
 
         var chartContainer = document.getElementById(chartContainerId);
